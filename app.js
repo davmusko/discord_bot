@@ -1,9 +1,16 @@
 const Discord = require('discord.js');
-const config = require('./config.json');
+const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 
 client.once('ready', () => {
   console.log('Hello World');
 });
 
-client.login(config.token);
+client.on('message', (message) => {
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if (message.content === `${prefix}ping`) {
+    message.channel.send(message.channel.name);
+  }
+});
+
+client.login(token);
